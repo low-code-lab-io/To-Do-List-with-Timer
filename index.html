@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Note Taker with Custom Timer</title>
+    <style>
+        #noteArea {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+        }
+        .toolbar {
+            margin-bottom: 10px;
+        }
+        button {
+            margin-right: 5px;
+        }
+        #timer {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="startTimer(10)">10 Min</button>
+        <button onclick="startTimer(15)">15 Min</button>
+        <button onclick="startTimer(30)">30 Min</button>
+        <span id="timer">00:00</span>
+    </div>
+
+    <div id="noteArea" contenteditable="true" placeholder="Start taking notes..." onkeydown="checkForEnter(event)">
+        <div><input type="checkbox"> Start your first task...</div>
+    </div>
+
+    <script>
+        let minutes = 0;
+        let seconds = 0;
+        let timerInterval;
+
+        function startTimer(duration) {
+            if (timerInterval) clearInterval(timerInterval);
+            minutes = duration;
+            seconds = 0;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                }
+                if (minutes === 0 && seconds === 0) {
+                    clearInterval(timerInterval);
+                    clearNotes();
+                }
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const formattedMinutes = minutes.toString().padStart(2, '0');
+            const formattedSeconds = seconds.toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${formattedMinutes}:${formattedSeconds}`;
+        }
+
+        function clearNotes() {
+            document.getElementById('noteArea').innerHTML = '<div><input type="checkbox"> Start your first task...</div>';
+        }
+
+        function checkForEnter(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                insertNewTask();
+            }
+        }
+
+        function insertNewTask() {
+            const newTask = document.createElement('div');
+            newTask.innerHTML = '<input type="checkbox"> ';
+            document.getElementById('noteArea').appendChild(newTask);
+            placeCaretAtEnd(newTask);
+        }
+
+        function placeCaretAtEnd(element) {
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.setStart(element, 1);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+            element.focus();
+        }
+    </script>
+</body>
+</html>
