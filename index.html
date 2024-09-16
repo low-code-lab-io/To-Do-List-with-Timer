@@ -9,6 +9,9 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
         }
         .note-container {
             display: inline-block;
@@ -25,8 +28,11 @@
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            color: #333;
             overflow-y: auto;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
         button {
             margin-right: 5px;
@@ -37,6 +43,27 @@
             font-size: 24px;
             margin-top: 10px;
             text-align: center;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #333;
+                color: #f1f1f1;
+            }
+            #noteArea {
+                background-color: #444;
+                color: #f1f1f1;
+                border: 1px solid #666;
+            }
+            button {
+                background-color: #555;
+                color: white;
+                border: 1px solid #666;
+            }
+            #timer {
+                color: #f1f1f1;
+            }
         }
     </style>
 </head>
