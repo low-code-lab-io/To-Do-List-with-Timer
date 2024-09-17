@@ -13,6 +13,9 @@
             color: black;
             transition: background-color 0.3s, color 0.3s;
         }
+        h1 {
+            margin-bottom: 20px;
+        }
         .note-container {
             display: inline-block;
             text-align: left;
@@ -68,6 +71,10 @@
     </style>
 </head>
 <body>
+
+    <!-- Title -->
+    <h1>To Do List with Timer</h1>
+
     <div class="note-container">
         <div class="toolbar">
             <button onclick="startTimer(10)">10 Min</button>
@@ -139,5 +146,6 @@
             element.focus();
         }
     </script>
+
 </body>
 </html>
